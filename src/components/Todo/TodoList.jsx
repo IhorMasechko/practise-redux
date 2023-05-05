@@ -1,13 +1,21 @@
 import { Grid, GridItem, Text, Todo } from 'components';
-import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getTodos } from 'redux/operations';
 import { selectTodos } from 'redux/selectors';
 
 export const TodoList = () => {
   const todos = useSelector(selectTodos);
-  console.log(todos);
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getTodos());
+  }, [dispatch]);
+  if (!todos) {
+    return;
+  }
   return (
     <>
-      <h1>Hello</h1>
       {todos.length === 0 && (
         <Text textAlign="center">There are no any todos ... </Text>
       )}
